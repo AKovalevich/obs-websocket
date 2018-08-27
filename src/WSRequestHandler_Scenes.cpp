@@ -127,11 +127,13 @@ void WSRequestHandler::HandleSetSceneItemOrder(WSRequestHandler* req) {
 
     if (obs_scene_reorder_items(obs_scene_from_source(scene), newOrder.data(), count)) {
         req->SendOKResponse();
+        return;
     }
     else {
         req->SendErrorResponse("Invalid sceneItem order");
     }
-    for (size_t i = 0; i < count; i++) {
-        obs_sceneitem_release(newOrder[i]);
-    }
+    // Fallback obs scene item release
+//    for (size_t i = 0; i < count; i++) {
+//        obs_sceneitem_release(newOrder[i]);
+//    }
 }
